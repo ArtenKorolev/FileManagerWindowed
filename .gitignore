@@ -40,3 +40,7 @@ Debug/
 debug/
 release/
 Release/
+
+# IDE folders
+.idea/
+.vscode/

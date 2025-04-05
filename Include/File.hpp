@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include "Utils.hpp"
+#include "OsSpecificConfig.hpp"
 
 
 class File {

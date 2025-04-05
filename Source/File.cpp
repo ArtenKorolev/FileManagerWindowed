@@ -6,11 +6,13 @@ File::File(const std::string &path, const std::string &name)
 {}
 
 std::string File::getFullPath() const {
-    if (utils::endsWith(_path, "/")) {
+    std::string pathSeparator = OsSpecificConfig::getPathSeparator();
+
+    if (utils::endsWith(_path, pathSeparator)) {
         return _path + _name;
     }
 
-    return _path + "/" + _name;
+    return _path + pathSeparator + _name;
 }
 
 void FileCreator::createFile(const File &file) {

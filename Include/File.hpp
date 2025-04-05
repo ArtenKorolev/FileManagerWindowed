@@ -2,6 +2,7 @@
 #define _FILE_HPP_
 
 #include <string>
+#include <fstream>
 #include "Utils.hpp"
 
 
@@ -12,6 +13,18 @@ public:
     std::string getFullPath() const ;
 private:
     std::string _path, _name;
+};
+
+
+class FileCreator {
+public:
+    void createFile(const File &file);
+};
+
+
+class FileDeleter {
+public:
+    void deleteFile(const File &file);
 };
 
 

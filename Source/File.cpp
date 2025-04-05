@@ -12,3 +12,21 @@ std::string File::getFullPath() const {
 
     return _path + "/" + _name;
 }
+
+void FileCreator::createFile(const File &file) {
+    std::ofstream ofs(file.getFullPath());
+
+    if (!ofs) {
+        throw std::runtime_error("Failed to create file: " + file.getFullPath());
+    }
+
+    ofs.close();
+}
+
+void FileDeleter::deleteFile(const File &file) {
+    const std::string fullPath = file.getFullPath();
+    
+    if (std::remove(fullPath.c_str()) != 0) {
+        throw std::runtime_error("Failed to delete file: " + fullPath);
+    }
+}

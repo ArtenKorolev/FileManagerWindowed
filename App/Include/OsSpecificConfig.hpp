@@ -7,6 +7,7 @@
 class OsSpecificConfig {
 public:
     static std::string getPathSeparator();
+    static std::string getHomeDirectory();
 };
 
 

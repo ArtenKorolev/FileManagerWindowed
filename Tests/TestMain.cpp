@@ -21,11 +21,7 @@ TEST_CASE("Get full path worked test case") {
 }
 
 TEST_CASE("Entity exists method test case") {
-#ifdef _WIN32
-    const std::string homePath = "C:\\";
-#else
-    const std::string homePath = "/";
-#endif
+    const auto homePath = OsSpecificConfig::getHomeDirectory();
     const auto real = FileSystemAnalyzer::isEntityExists(std::make_shared<Directory>(homePath, ""));
 
     REQUIRE(real == true);

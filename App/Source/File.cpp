@@ -23,13 +23,13 @@ void FileDeleter::deleteFile(const File &file) const {
     }
 }
 
-void FileMover::moveFile(File &file, const std::string &pathForMoving) const {
-    if (!FileSystemAnalyzer::isEntityExists(std::make_shared<Directory>(pathForMoving, ""))) {
-        throw std::runtime_error("Directory for moving does not exist: " + pathForMoving);
+void FileMover::moveFile(File &file, const Directory &directoryToMove) const {
+    if (!FileSystemAnalyzer::isEntityExists(std::make_shared<Directory>(directoryToMove))) {
+        throw std::runtime_error("Directory for moving does not exist: " + directoryToMove.getFullPath());
     }
 
     const std::string oldFilePath = file.getFullPath(); 
-    file.move(pathForMoving);
+    file.move(directoryToMove.getFullPath());
 
     try {
         std::filesystem::rename(oldFilePath, file.getFullPath());

@@ -29,7 +29,7 @@ public:
 
 class FileMover {
 public:
-    void moveFile(File &file, const std::string &pathForMoving) const;
+    void moveFile(File &file, const Directory &directoryToMove) const;
 };
 
 

@@ -3,17 +3,13 @@
 
 #include <string>
 #include <fstream>
-#include "Utils.hpp"
-#include "OsSpecificConfig.hpp"
+#include "FileSystemEntity.hpp"
 
 
-class File {
+class File : public FileSystemEntity {
 public:
     File() = default;
     File(const std::string &path, const std::string &name);
-    std::string getFullPath() const ;
-private:
-    std::string _path, _name;
 };
 
 

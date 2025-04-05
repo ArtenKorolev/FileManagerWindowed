@@ -2,7 +2,8 @@
 #define _DIRECTORY_HPP_
 
 #include <string>
-#include "FileSystemEntity.hpp"
+#include <vector>
+#include "FileSystemAnalyzer.hpp"
 
 
 class Directory : public FileSystemEntity {
@@ -13,18 +14,21 @@ public:
 
 
 class DirectoryCreator {
-
+public:
+    void createDirectory(const Directory &directory);
 };
 
 
 class DirectoryDeleter {
-
+public:
+    void deleteDirectory(const Directory &directory);
 };
 
 
 class DirectoryObserver {
-
+public:
+    std::vector<std::string> listDirectory(const Directory &directory);
 };
 
 
-#endif // _ DIRECTORY_HPP_
+#endif // _DIRECTORY_HPP_

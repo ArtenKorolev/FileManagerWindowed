@@ -15,19 +15,19 @@ public:
 
 class DirectoryCreator {
 public:
-    void createDirectory(const Directory &directory);
+    void createDirectory(const Directory &directory) const;
 };
 
 
 class DirectoryDeleter {
 public:
-    void deleteDirectory(const Directory &directory);
+    void deleteDirectory(const Directory &directory) const;
 };
 
 
 class DirectoryObserver {
 public:
-    std::vector<std::string> listDirectory(const Directory &directory);
+    std::vector<std::string> listDirectory(const Directory &directory) const;
 };
 
 

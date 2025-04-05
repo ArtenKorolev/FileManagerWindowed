@@ -5,7 +5,7 @@ Directory::Directory(const std::string &path, const std::string &name)
     : FileSystemEntity(path, name)
 {}
 
-void DirectoryCreator::createDirectory(const Directory &directory) {
+void DirectoryCreator::createDirectory(const Directory &directory) const {
     const std::string fullPath = directory.getFullPath();
 
     if (!std::filesystem::create_directory(fullPath)) {
@@ -13,7 +13,7 @@ void DirectoryCreator::createDirectory(const Directory &directory) {
     }
 }
 
-void DirectoryDeleter::deleteDirectory(const Directory &directory) {
+void DirectoryDeleter::deleteDirectory(const Directory &directory) const {
     const std::string fullPath = directory.getFullPath();
 
     if (std::filesystem::remove_all(fullPath) == 0) {
@@ -21,7 +21,7 @@ void DirectoryDeleter::deleteDirectory(const Directory &directory) {
     }
 }
 
-std::vector<std::string> DirectoryObserver::listDirectory(const Directory &directory) {
+std::vector<std::string> DirectoryObserver::listDirectory(const Directory &directory) const {
     const std::string fullPath = directory.getFullPath();
     std::vector<std::string> fileList;
 

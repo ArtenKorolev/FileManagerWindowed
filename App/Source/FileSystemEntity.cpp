@@ -14,3 +14,11 @@ std::string FileSystemEntity::getFullPath() const {
 
     return _path + pathSeparator + _name;
 }
+
+void FileSystemEntity::move(const std::string &newPath) {
+    if (newPath.empty()) {
+        throw std::invalid_argument("New path cannot be empty.");
+    }
+
+    _path = newPath;
+}

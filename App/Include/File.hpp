@@ -3,7 +3,9 @@
 
 #include <string>
 #include <fstream>
+#include "Directory.hpp"
 #include "FileSystemEntity.hpp"
+#include "FileSystemAnalyzer.hpp"
 
 
 class File : public FileSystemEntity {
@@ -15,13 +17,19 @@ public:
 
 class FileCreator {
 public:
-    void createFile(const File &file);
+    void createFile(const File &file) const;
 };
 
 
 class FileDeleter {
 public:
-    void deleteFile(const File &file);
+    void deleteFile(const File &file) const;
+};
+
+
+class FileMover {
+public:
+    void moveFile(File &file, const std::string &pathForMoving) const;
 };
 
 

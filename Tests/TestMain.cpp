@@ -2,6 +2,7 @@
 #include <catch2/catch_all.hpp>
 #include "../App/Include/FileSystemAnalyzer.hpp"
 #include "../App/Include/Directory.hpp"
+#include "../App/Include/File.hpp"
 
 
 TEST_CASE("Get full path worked test case") {
@@ -27,4 +28,10 @@ TEST_CASE("Ends with function test case") {
     REQUIRE(utils::endsWith("asdfg", "fg") == true);
     REQUIRE_FALSE(utils::endsWith("", "fg") == true);
     REQUIRE_FALSE(utils::endsWith("asdfg", "s") == true);
+}
+
+TEST_CASE("File moving test case") {
+    File file("path", "testfile.txt");
+    file.move("newpath");
+    REQUIRE(file.getFullPath() == "newpath" + OsSpecificConfig::getPathSeparator() + "testfile.txt");
 }

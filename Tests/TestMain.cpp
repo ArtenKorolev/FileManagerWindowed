@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch_all.hpp>
 #include "../App/Include/FileSystemAnalyzer.hpp"
+#include "../App/Include/Directory.hpp"
 
 
 TEST_CASE("Get full path worked test case") {

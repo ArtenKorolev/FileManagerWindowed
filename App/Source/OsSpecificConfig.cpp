@@ -11,7 +11,7 @@ std::string OsSpecificConfig::getPathSeparator() {
 
 std::string OsSpecificConfig::getHomeDirectory() {
 #ifdef _WIN32
-    return "C:\\"
+    return "C:\\";
 #else
     return "/";
 #endif

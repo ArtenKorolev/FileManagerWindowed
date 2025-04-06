@@ -9,6 +9,10 @@ File::File(const std::string &path, const std::string &name)
     }
 }
 
+const std::string &File::getName() const {
+    return _name;
+}
+
 void FileCreator::createFile(const FileSystemEntity &file) const {
     std::ofstream ofs(file.getFullPath());
 
@@ -36,5 +40,16 @@ void FileMover::moveFile(File &file, const Directory &directoryToMove) const {
     }
     catch (const std::filesystem::filesystem_error &e) {
         throw std::runtime_error("Failed to move file from " + oldFilePath + " to " + file.getFullPath() + ": " + e.what());
+    }
+}
+
+void FileCopier::copyFile(const File &file, const Directory &directoryToCopy) {
+    const std::string sourcePath = file.getFullPath();
+    const std::string destinationPath = directoryToCopy.getFullPath() + OsSpecificConfig::getPathSeparator() + file.getName();
+
+    try {
+        std::filesystem::copy(sourcePath, destinationPath, std::filesystem::copy_options::overwrite_existing); // Копируем файл
+    } catch (const std::filesystem::filesystem_error &e) {
+        throw std::runtime_error("Failed to copy file from " + sourcePath + " to " + destinationPath + ": " + e.what());
     }
 }

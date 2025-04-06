@@ -3,6 +3,7 @@
 
 #include <string>
 #include <fstream>
+#include <filesystem>
 #include "Directory.hpp"
 #include "FileSystemEntity.hpp"
 #include "FileSystemAnalyzer.hpp"
@@ -12,6 +13,7 @@ class File : public FileSystemEntity {
 public:
     File() = default;
     File(const std::string &path, const std::string &name);
+    const std::string &getName() const;
 };
 
 
@@ -30,6 +32,12 @@ public:
 class FileMover {
 public:
     void moveFile(File &file, const Directory &directoryToMove) const;
+};
+
+
+class FileCopier {
+public:
+    void copyFile(const File &file, const Directory &directoryToCopy);
 };
 
 

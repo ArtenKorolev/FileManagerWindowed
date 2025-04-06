@@ -31,4 +31,10 @@ public:
 };
 
 
+class DirectoryMover {
+public:
+    void moveDirectory(Directory &directory, const Directory &whereToMove) const;
+};
+
+
 #endif // _DIRECTORY_HPP_

@@ -34,3 +34,15 @@ std::vector<std::string> DirectoryObserver::listDirectory(const Directory &direc
 
     return fileList;
 }
+
+void DirectoryMover::moveDirectory(Directory &directory, const Directory &whereToMove) const {
+    const std::string oldDirPath = directory.getFullPath(); 
+    directory.move(whereToMove.getFullPath());
+
+    try {
+        std::filesystem::rename(oldDirPath, directory.getFullPath());
+    }
+    catch (const std::filesystem::filesystem_error &e) {
+        throw std::runtime_error("Failed to move directory from " + oldDirPath + " to " + directory.getFullPath() + ": " + e.what());
+    }
+}

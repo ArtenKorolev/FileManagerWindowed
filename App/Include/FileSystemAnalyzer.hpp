@@ -8,9 +8,9 @@
 
 class FileSystemAnalyzer {
 public:
-    static bool isFile(const std::shared_ptr<FileSystemEntity> entity);
-    static bool isDirectory(const std::shared_ptr<FileSystemEntity> entity);
-    static bool isEntityExists(const std::shared_ptr<FileSystemEntity> entity);
+    static bool isFile(const FileSystemEntity &entity);
+    static bool isDirectory(const FileSystemEntity &entity);
+    static bool isEntityExists(const FileSystemEntity &entity);
 };
 
 

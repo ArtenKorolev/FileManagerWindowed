@@ -3,9 +3,13 @@
 
 Directory::Directory(const std::string &path, const std::string &name) 
     : FileSystemEntity(path, name)
-{}
+{
+    if (!FileSystemAnalyzer::isEntityExists({path, name}) || !FileSystemAnalyzer::isDirectory({path, name})) {
+        throw std::runtime_error("Directory does not exist: " + getFullPath());
+    }
+}
 
-void DirectoryCreator::createDirectory(const Directory &directory) const {
+void DirectoryCreator::createDirectory(const FileSystemEntity &directory) const {
     const std::string fullPath = directory.getFullPath();
 
     if (!std::filesystem::create_directory(fullPath)) {
@@ -22,14 +26,9 @@ void DirectoryDeleter::deleteDirectory(const Directory &directory) const {
 }
 
 std::vector<std::string> DirectoryObserver::listDirectory(const Directory &directory) const {
-    const std::string fullPath = directory.getFullPath();
     std::vector<std::string> fileList;
 
-    if (!FileSystemAnalyzer::isEntityExists(std::make_shared<Directory>(directory)) || !FileSystemAnalyzer::isDirectory(std::make_shared<Directory>(directory))) {
-        throw std::runtime_error("Directory does not exist: " + fullPath);
-    }
-
-    for (const auto &entry : std::filesystem::directory_iterator(fullPath)) {
+    for (const auto &entry : std::filesystem::directory_iterator(directory.getFullPath())) {
         fileList.push_back(entry.path().filename().string());
     }
 

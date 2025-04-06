@@ -17,7 +17,7 @@ public:
 
 class FileCreator {
 public:
-    void createFile(const File &file) const;
+    void createFile(const FileSystemEntity &file) const;
 };
 
 

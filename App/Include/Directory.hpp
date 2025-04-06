@@ -15,7 +15,7 @@ public:
 
 class DirectoryCreator {
 public:
-    void createDirectory(const Directory &directory) const;
+    void createDirectory(const FileSystemEntity &directory) const;
 };
 
 

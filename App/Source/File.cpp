@@ -3,9 +3,13 @@
 
 File::File(const std::string &path, const std::string &name) 
     : FileSystemEntity(path, name)
-{}
+{
+    if (!FileSystemAnalyzer::isEntityExists({path, name}) || !FileSystemAnalyzer::isFile({path, name})) {
+        throw std::runtime_error("File does not exist: " + getFullPath());
+    }
+}
 
-void FileCreator::createFile(const File &file) const {
+void FileCreator::createFile(const FileSystemEntity &file) const {
     std::ofstream ofs(file.getFullPath());
 
     if (!ofs) {
@@ -24,10 +28,6 @@ void FileDeleter::deleteFile(const File &file) const {
 }
 
 void FileMover::moveFile(File &file, const Directory &directoryToMove) const {
-    if (!FileSystemAnalyzer::isEntityExists(std::make_shared<Directory>(directoryToMove))) {
-        throw std::runtime_error("Directory for moving does not exist: " + directoryToMove.getFullPath());
-    }
-
     const std::string oldFilePath = file.getFullPath(); 
     file.move(directoryToMove.getFullPath());
 

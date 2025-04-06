@@ -46,3 +46,25 @@ void DirectoryMover::moveDirectory(Directory &directory, const Directory &whereT
         throw std::runtime_error("Failed to move directory from " + oldDirPath + " to " + directory.getFullPath() + ": " + e.what());
     }
 }
+
+void DirectoryCopier::copyDirectory(const Directory &directory, const Directory &whereToCopy) {
+    auto directoryElements = DirectoryObserver().listDirectory(directory);
+
+    for (const auto &entityName : directoryElements) {
+        FileSystemEntity entity(directory.getFullPath(), entityName);
+
+        if (FileSystemAnalyzer::isDirectory(entity)) {
+            copyDirectory(
+                Directory(directory.getFullPath(), entityName), 
+                Directory(whereToCopy.getFullPath(), entityName)
+            );
+        }
+        else if (FileSystemAnalyzer::isFile(entity)) {
+            File file(directory.getFullPath(), entityName);
+            FileCopier().copyFile(file, whereToCopy);
+        }
+        else {
+            throw std::runtime_error("Unknown entity type found during directory copy: " + entity.getFullPath());
+        }
+    }
+}

@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "FileSystemAnalyzer.hpp"
+#include "File.hpp"
 
 
 class Directory : public FileSystemEntity {
@@ -34,6 +35,12 @@ public:
 class DirectoryMover {
 public:
     void moveDirectory(Directory &directory, const Directory &whereToMove) const;
+};
+
+
+class DirectoryCopier {
+public:
+    void copyDirectory(const Directory &directory, const Directory &whereToCopy);
 };
 
 

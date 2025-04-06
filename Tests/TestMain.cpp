@@ -19,19 +19,19 @@ TEST_CASE("Get full path worked test case") {
 
 TEST_CASE("Entity exists method test case") {
     const auto homePath = OsSpecificConfig::getHomeDirectory();
-    const auto real = FileSystemAnalyzer::isEntityExists(std::make_shared<Directory>(homePath, ""));
+    const auto real = FileSystemAnalyzer::isEntityExists({homePath, ""});
 
-    REQUIRE(real == true);
+    REQUIRE(real);
 }
 
 TEST_CASE("Ends with function test case") {
-    REQUIRE(utils::endsWith("asdfg", "fg") == true);
-    REQUIRE_FALSE(utils::endsWith("", "fg") == true);
-    REQUIRE_FALSE(utils::endsWith("asdfg", "s") == true);
+    REQUIRE(utils::endsWith("asdfg", "fg") );
+    REQUIRE_FALSE(utils::endsWith("", "fg"));
+    REQUIRE_FALSE(utils::endsWith("asdfg", "s"));
 }
 
-TEST_CASE("File moving test case") {
-    File file("path", "testfile.txt");
-    file.move("newpath");
-    REQUIRE(file.getFullPath() == "newpath" + OsSpecificConfig::getPathSeparator() + "testfile.txt");
+TEST_CASE("Filesystem entity moving test case") {
+    FileSystemEntity e("path", "testfile.txt");
+    e.move("newpath");
+    REQUIRE(e.getFullPath() == "newpath" + OsSpecificConfig::getPathSeparator() + "testfile.txt");
 }

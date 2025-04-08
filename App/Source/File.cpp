@@ -53,3 +53,14 @@ void FileCopier::copyFile(const File &file, const Directory &directoryToCopy) {
         throw std::runtime_error("Failed to copy file from " + sourcePath + " to " + destinationPath + ": " + e.what());
     }
 }
+
+void FileWriter::wirteToFileEnd(const File &file, const std::string &text) {
+    std::ofstream outFile(file.getFullPath(), std::ios::app);
+
+    if (!outFile) {
+        throw std::runtime_error("Failed to open file.");
+    }
+
+    outFile << text;
+    outFile.close();
+}

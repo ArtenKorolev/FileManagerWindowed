@@ -41,4 +41,10 @@ public:
 };
 
 
+class FileWriter {
+public:
+    void wirteToFileEnd(const File &file, const std::string &text);
+};
+
+
 #endif // _FILE_HPP_

@@ -10,10 +10,6 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/App/Include
 )
 
-file(GLOB CPP_SOURCES 
-    "${CMAKE_SOURCE_DIR}/App/Source/*.cpp"
-)
-
 # Core app code
 add_library(
     AppCode 
@@ -30,10 +26,11 @@ add_library(
 add_executable(
     FileManagerWindowed 
     "App/Source/Main.cpp"
+    "App/Source/SFMLInterface.cpp"
 )
 
 # Adding the core app code to the executable
-target_link_libraries(FileManagerWindowed AppCode)
+target_link_libraries(FileManagerWindowed PRIVATE AppCode)
 
 include(FetchContent)
 
@@ -45,12 +42,22 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(catch2)
 
+
+FetchContent_Declare(
+  SFML
+  GIT_REPOSITORY https://github.com/SFML/SFML.git
+  GIT_TAG        2.5.1 
+)
+
+FetchContent_MakeAvailable(SFML)
+
 file(GLOB TEST_SOURCES "${CMAKE_SOURCE_DIR}/Tests/*.cpp") 
 
 add_executable(tests ${TEST_SOURCES})
 
 # Adding the core app code for testing
 target_link_libraries(tests AppCode Catch2::Catch2WithMain)
+target_link_libraries(FileManagerWindowed PRIVATE sfml-graphics sfml-window sfml-system)
 
 enable_testing()
 

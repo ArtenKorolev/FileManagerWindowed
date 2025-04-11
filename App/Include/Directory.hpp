@@ -38,10 +38,4 @@ public:
 };
 
 
-class DirectoryCopier {
-public:
-    void copyDirectory(const Directory &directory, const Directory &whereToCopy);
-};
-
-
 #endif // _DIRECTORY_HPP_

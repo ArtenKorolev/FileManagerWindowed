@@ -10,6 +10,8 @@
 class SFMLInterface {
 public:
     void mainLoop();
+private:
+    void _handleEvents(sf::RenderWindow &window);
 };
 
 

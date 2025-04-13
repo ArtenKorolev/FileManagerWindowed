@@ -34,7 +34,7 @@ add_library(
     "App/Source/Application.cpp"
     "App/Source/Directory.cpp"
     "App/Source/FileSystemAnalyzer.cpp"
-    "App/Source/FileSystemEntity.cpp"
+    "App/Source/Path.cpp"
     "App/Source/OsSpecificConfig.cpp"
     "App/Source/Utils.cpp"
 )

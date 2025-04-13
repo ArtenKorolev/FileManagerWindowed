@@ -8,18 +8,18 @@
 TEST_CASE("Get full path worked test case") {
     const auto excpected = "path" + OsSpecificConfig::getPathSeparator() + "name";
     
-    FileSystemEntity entity("path", "name");
-    auto real = entity.getFullPath();
+    Path path("path", "name");
+    auto real = path.getFullPath();
     REQUIRE(excpected == real);
     
-    FileSystemEntity entity2("path/", "name");
-    real = entity2.getFullPath();
+    Path path2("path/", "name");
+    real = path2.getFullPath();
     REQUIRE(excpected == real);
 }
 
 TEST_CASE("Entity exists method test case") {
     const auto homePath = OsSpecificConfig::getHomeDirectory();
-    const auto real = FileSystemAnalyzer::isEntityExists({homePath, ""});
+    const auto real = FileSystemAnalyzer::isEntityExists(homePath);
 
     REQUIRE(real);
 }
@@ -28,10 +28,4 @@ TEST_CASE("Ends with function test case") {
     REQUIRE(utils::endsWith("asdfg", "fg") );
     REQUIRE_FALSE(utils::endsWith("", "fg"));
     REQUIRE_FALSE(utils::endsWith("asdfg", "s"));
-}
-
-TEST_CASE("Filesystem entity moving test case") {
-    FileSystemEntity e("path", "testfile.txt");
-    e.move("newpath");
-    REQUIRE(e.getFullPath() == "newpath" + OsSpecificConfig::getPathSeparator() + "testfile.txt");
 }

@@ -7,30 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 include_directories(
-    ${CMAKE_SOURCE_DIR}/App/Include
+    "App/Include"
 )
-
-# Core app code
-add_library(
-    AppCode 
-    "App/Source/File.cpp"
-    "App/Source/Application.cpp"
-    "App/Source/Directory.cpp"
-    "App/Source/FileSystemAnalyzer.cpp"
-    "App/Source/FileSystemEntity.cpp"
-    "App/Source/OsSpecificConfig.cpp"
-    "App/Source/Utils.cpp"
-)
-
-# Executable with entrypoint
-add_executable(
-    FileManagerWindowed 
-    "App/Source/Main.cpp"
-    "App/Source/SFMLInterface.cpp"
-)
-
-# Adding the core app code to the executable
-target_link_libraries(FileManagerWindowed PRIVATE AppCode)
 
 include(FetchContent)
 
@@ -42,26 +20,38 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(catch2)
 
-
 FetchContent_Declare(
-  SFML
-  GIT_REPOSITORY https://github.com/SFML/SFML.git
-  GIT_TAG        2.5.1 
+    SFML
+    GIT_REPOSITORY https://github.com/SFML/SFML.git
+    GIT_TAG        2.5.1 
 )
 
 FetchContent_MakeAvailable(SFML)
 
-file(GLOB TEST_SOURCES "${CMAKE_SOURCE_DIR}/Tests/*.cpp") 
+add_library(
+    AppCode 
+    "App/Source/File.cpp"
+    "App/Source/Application.cpp"
+    "App/Source/Directory.cpp"
+    "App/Source/FileSystemAnalyzer.cpp"
+    "App/Source/FileSystemEntity.cpp"
+    "App/Source/OsSpecificConfig.cpp"
+    "App/Source/Utils.cpp"
+)
 
-add_executable(tests ${TEST_SOURCES})
+add_executable(
+    FileManagerWindowed 
+    "App/Source/Main.cpp"
+    "App/Source/SFMLInterface.cpp"
+    "App/Source/SFMLPrimitivsDrawer.cpp"
+    "App/Source/ResourceManager.cpp"
+)
 
-# Adding the core app code for testing
-target_link_libraries(tests AppCode Catch2::Catch2WithMain)
-target_link_libraries(FileManagerWindowed PRIVATE sfml-graphics sfml-window sfml-system)
+target_link_libraries(FileManagerWindowed PRIVATE AppCode sfml-graphics sfml-window sfml-system)
+
+file(GLOB TEST_SOURCES "Tests/*.cpp")
+add_executable(Tests ${TEST_SOURCES})
+target_link_libraries(Tests PRIVATE AppCode Catch2::Catch2WithMain)
 
 enable_testing()
-
-add_test(
-    NAME all_tests
-    COMMAND tests
-)
+add_test(NAME Tests COMMAND Tests)

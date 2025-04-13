@@ -3,14 +3,13 @@
 
 #include <memory>
 #include <filesystem>
-#include "FileSystemEntity.hpp"
 
 
 class FileSystemAnalyzer {
 public:
-    static bool isFile(const FileSystemEntity &entity);
-    static bool isDirectory(const FileSystemEntity &entity);
-    static bool isEntityExists(const FileSystemEntity &entity);
+    static bool isFile(const std::string &path);
+    static bool isDirectory(const std::string &path);
+    static bool isEntityExists(const std::string &path);
 };
 
 

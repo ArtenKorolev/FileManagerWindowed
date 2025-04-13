@@ -5,33 +5,35 @@
 #include <fstream>
 #include <filesystem>
 #include "Directory.hpp"
-#include "FileSystemEntity.hpp"
-#include "FileSystemAnalyzer.hpp"
+#include "Path.hpp"
 
 
-class File : public FileSystemEntity {
+class File {
 public:
     File() = default;
-    File(const std::string &path, const std::string &name);
-    const std::string &getName() const;
+    File(const ExistingPath &path);
+    const std::string &getPath() const;
+    std::string getName() const;
+private:
+    ExistingPath _path;
 };
 
 
 class FileCreator {
 public:
-    void createFile(const FileSystemEntity &file) const;
+    void createFile(const Path &path) const;
 };
 
 
 class FileDeleter {
 public:
-    void deleteFile(const File &file) const;
+    void deleteFile(const File &path) const;
 };
 
 
 class FileMover {
 public:
-    void moveFile(File &file, const Directory &directoryToMove) const;
+    void moveFile(const File &file, const Directory &directoryToMove) const;
 };
 
 

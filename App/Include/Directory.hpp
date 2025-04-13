@@ -4,19 +4,23 @@
 #include <string>
 #include <vector>
 #include "FileSystemAnalyzer.hpp"
-#include "File.hpp"
+#include "Path.hpp"
 
 
-class Directory : public FileSystemEntity {
+class Directory {
 public:
     Directory() = default;
-    Directory(const std::string &path, const std::string &name);
+    Directory(const ExistingPath &path);
+    const std::string &getPath() const;
+    const std::string &getName() const;
+private:
+    ExistingPath _path;
 };
 
 
 class DirectoryCreator {
 public:
-    void createDirectory(const FileSystemEntity &directory) const;
+    void createDirectory(const Path &where) const;
 };
 
 

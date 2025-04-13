@@ -1,24 +1,31 @@
 #include "Directory.hpp"
 
 
-Directory::Directory(const std::string &path, const std::string &name) 
-    : FileSystemEntity(path, name)
+Directory::Directory(const ExistingPath &path)
+    : _path(path)
 {
-    if (!FileSystemAnalyzer::isEntityExists({path, name}) || !FileSystemAnalyzer::isDirectory({path, name})) {
-        throw std::runtime_error("Directory does not exist: " + getFullPath());
+    if (!FileSystemAnalyzer::isDirectory(path.getFullPath())) {
+        throw std::invalid_argument("Объект не является директорией: " + path.getFullPath());
     }
 }
 
-void DirectoryCreator::createDirectory(const FileSystemEntity &directory) const {
-    const std::string fullPath = directory.getFullPath();
+const std::string &Directory::getPath() const {
+    return _path.getFullPath();
+}
 
-    if (!std::filesystem::create_directory(fullPath)) {
-        throw std::runtime_error("Failed to create directory: " + fullPath);
+const std::string &Directory::getName() const {
+    return _path.getName();
+}
+
+
+void DirectoryCreator::createDirectory(const Path &where) const {
+    if (!std::filesystem::create_directory(where.getFullPath())) {
+        throw std::runtime_error("Failed to create directory: " + where.getFullPath());
     }
 }
 
 void DirectoryDeleter::deleteDirectory(const Directory &directory) const {
-    const std::string fullPath = directory.getFullPath();
+    const std::string fullPath = directory.getPath();
 
     if (std::filesystem::remove_all(fullPath) == 0) {
         throw std::runtime_error("Failed to delete directory: " + fullPath);
@@ -28,7 +35,7 @@ void DirectoryDeleter::deleteDirectory(const Directory &directory) const {
 std::vector<std::string> DirectoryObserver::listDirectory(const Directory &directory) const {
     std::vector<std::string> fileList;
 
-    for (const auto &entry : std::filesystem::directory_iterator(directory.getFullPath())) {
+    for (const auto &entry : std::filesystem::directory_iterator(directory.getPath())) {
         fileList.push_back(entry.path().filename().string());
     }
 
@@ -36,13 +43,12 @@ std::vector<std::string> DirectoryObserver::listDirectory(const Directory &direc
 }
 
 void DirectoryMover::moveDirectory(Directory &directory, const Directory &whereToMove) const {
-    const std::string oldDirPath = directory.getFullPath(); 
-    directory.move(whereToMove.getFullPath());
-
+    Path destinationPath(whereToMove.getPath(), directory.getName());
+    
     try {
-        std::filesystem::rename(oldDirPath, directory.getFullPath());
+        std::filesystem::rename(directory.getPath(), destinationPath.getPath());
     }
     catch (const std::filesystem::filesystem_error &e) {
-        throw std::runtime_error("Failed to move directory from " + oldDirPath + " to " + directory.getFullPath() + ": " + e.what());
+        throw std::runtime_error("Failed to move directory " + std::string(e.what()));
     }
 }

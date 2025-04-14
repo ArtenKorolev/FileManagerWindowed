@@ -2,10 +2,10 @@
 
 
 Path::Path(const std::string &path, const std::string &name) 
-    : _path(_buildFullPath(path, name))
+    : _path(path), _name(name)
 {}
 
-const std::string &Path::getFullPath() const {
+std::string Path::getFullPath() const {
     return _buildFullPath(_path, _name);
 }
 
@@ -39,7 +39,7 @@ void ExistingPath::diveInto(const std::string &name) {
 }
 
 void ExistingPath::_throwIfPathIsNotExist() const {
-    if (!FileSystemAnalyzer::isEntityExists(_path)) {
-        throw std::invalid_argument("Путь не существует");
+    if (!FileSystemAnalyzer::isEntityExists(getFullPath())) {
+        throw std::invalid_argument("Путь не существует: " + getFullPath());
     }
 }

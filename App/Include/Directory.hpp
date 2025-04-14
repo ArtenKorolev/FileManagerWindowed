@@ -11,8 +11,8 @@ class Directory {
 public:
     Directory() = default;
     Directory(const ExistingPath &path);
-    const std::string &getPath() const;
-    const std::string &getName() const;
+    std::string getPath() const;
+    std::string getName() const;
 private:
     ExistingPath _path;
 };

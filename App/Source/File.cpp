@@ -4,12 +4,12 @@
 File::File(const ExistingPath &path) 
     : _path(path)
 {
-    if (!FileSystemAnalyzer::isFile(path.getPath())) {
+    if (!FileSystemAnalyzer::isFile(path.getFullPath())) {
         throw std::invalid_argument("Объект не является файлом: " + path.getPath());
     }
 }
 
-const std::string &File::getPath() const {
+std::string File::getPath() const {
     return _path.getFullPath();
 }
 

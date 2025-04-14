@@ -12,7 +12,7 @@ class File {
 public:
     File() = default;
     File(const ExistingPath &path);
-    const std::string &getPath() const;
+    std::string getPath() const;
     std::string getName() const;
 private:
     ExistingPath _path;

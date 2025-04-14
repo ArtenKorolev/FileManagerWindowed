@@ -9,11 +9,11 @@ Directory::Directory(const ExistingPath &path)
     }
 }
 
-const std::string &Directory::getPath() const {
+std::string Directory::getPath() const {
     return _path.getFullPath();
 }
 
-const std::string &Directory::getName() const {
+std::string Directory::getName() const {
     return _path.getName();
 }
 
